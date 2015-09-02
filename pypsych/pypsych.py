@@ -41,6 +41,8 @@ class MessageView(View):
             content = msg["doc"]["content"]
             timestamp = msg["doc"]["timestamp"]
             conversations[(a,b)].append({"content":content,"timestamp":timestamp,"sender":msg["doc"]["from"]})
+        for conversation in conversations.values():
+            conversation.sort(key=lambda msg:msg["timestamp"])
         return list(starmap((lambda conversations,messages:{"participants":conversations,"messages":messages}),conversations.items()))
 
 class WebApp:
