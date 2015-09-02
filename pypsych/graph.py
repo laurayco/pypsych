@@ -56,6 +56,7 @@ class Database:
                 self.storage.add_map_result(name, id, result)
                 total_results = self.storage.map_results(name)
                 self.storage.store_reduced_results(name, v.reduce(list(total_results.values())))
+        return id
 
 class Storage:
     def __init__(self):
