@@ -1,4 +1,4 @@
-import bottle
+﻿import bottle
 import pypsych
 import graph
 import json
@@ -76,7 +76,9 @@ class API(bottle.Bottle):
     def send_message(self, partner):
         sender = bottle.request.headers["uid"]
         content = bottle.request.forms["content"]
-        return self.data_interface.send_message(sender, partner, content)
+        r = self.data_interface.send_message(sender, partner, content)
+        self.update_conversation_view()
+        return r
 
 if __name__=="__main__":
     api = API(graph.Storage())
