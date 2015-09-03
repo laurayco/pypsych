@@ -39,6 +39,7 @@ class API(bottle.Bottle):
                 "username":username
             })
             self.send_email(email, "Registration Confirmation", "Please confirm your email at {}/users/confirm?uid={}".format(self.host, uid))
+            return uid
         except Exception as e:
             print(e)
             return "ERR"
@@ -71,7 +72,8 @@ class API(bottle.Bottle):
         msg_filter = lambda conv: uid in conv["participants"] and partner in conv["participants"]
         self.conversations.filter(msg_filter)
         convs = list(self.conversations)
-        return convs[0] if len(convs) else []
+        convs = convs[0] if len(convs) else {'messages':[],"participant":[]}
+        return convs
 
     def send_message(self, partner):
         sender = bottle.request.headers["uid"]
