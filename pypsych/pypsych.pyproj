@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>19dae95e-55f8-415f-b2c4-a83525b97d87</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>pypsych.py</StartupFile>
+    <StartupFile>web.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -26,6 +26,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="pypsych.py" />
+    <Compile Include="web.py" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -23,9 +23,9 @@ class ViewResults:
     def __iter__(self):
         return self.filtered_data.__iter__()
     def filter(self, filt):
-        self.filtered_data = filter(filt,self.data)
+        self.filtered_data = filter(filt, self.data)
     def sort(self, func, reverse=False):
-        self.data.sort(key=func,reverse=reverse)
+        self.data.sort(key=func, reverse=reverse)
 
 class View:
     def __init__(self):
@@ -46,7 +46,7 @@ class Database:
         return ViewResults(self.storage.view_results(name))
     def write(self, doc, id=None):
         if id:
-            self.storage.update_document(id,doc)
+            self.storage.update_document(id, doc)
         else:
             id = self.storage.create_document(doc)
         doc = self.storage.get_document(id)
@@ -62,7 +62,7 @@ class Storage:
     def __init__(self):
         self.documents = {}
         self.view_storage = {}
-    def get_document(self,id):
+    def get_document(self, id):
         return self.documents[id]
     def update_document(self, id, doc):
         self.documents[id] = {
@@ -71,7 +71,7 @@ class Storage:
             'created':self.documents[id]['created'],
             'doc':doc
         }
-    def introduce_view(self,name):
+    def introduce_view(self, name):
         self.view_storage[name] = {
             "map":{},
             "reduced":[]
