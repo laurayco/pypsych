@@ -28,6 +28,19 @@
     <Compile Include="pypsych.py" />
     <Compile Include="web.py" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="html\" />
+    <Folder Include="css\" />
+    <Folder Include="js\" />
+    <Folder Include="templates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="html\index.html" />
+    <Content Include="js\app.js" />
+    <Content Include="js\mustache.min.js" />
+    <Content Include="templates\header.mustache" />
+    <Content Include="templates\home.mustache" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>

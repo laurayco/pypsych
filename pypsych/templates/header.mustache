@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="keywords" content="{{#tags}}{{.}} {{/tags}}"/>
+    {{#scripts}}
+        <script type="text/javascript" src="/script/{{.}}"></script>
+    {{/scripts}}
+    {{#styles}}
+        <link rel="stylesheet" href="/style/{{.}}" />
+    {{/styles}}
+    <title>{{title}}{{^title}}Psych2Go Dating{{/title}}</title>
+</head>
+<body>
+    <div id="frame_area">
+        {{page_render}} {{!this only applies for pages that aren't dynamic (ie: search engines, or old browsers.) }}
+    </div>
+</body>
+</html>

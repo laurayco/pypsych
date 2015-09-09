@@ -2,6 +2,9 @@
 import pypsych
 import graph
 import json
+import pystache
+import os
+from functools import partial
 
 def json_dumper(f):
     def w(*a,**k):
@@ -24,7 +27,7 @@ class API(bottle.Bottle):
         self.update_conversation_view()
 
     def index_page(self):
-        return "HALLOOO"
+        return templates.Element("h1",templates.Element(None,text="Hello, world.")).render()
 
     @json_dumper
     def list_users(self):
@@ -82,6 +85,47 @@ class API(bottle.Bottle):
         self.update_conversation_view()
         return r
 
+class Interface(bottle.Bottle):
+    
+    def __init__(self):
+        super().__init__()
+        self.route("/", callback=self.index_page)
+        self.route("/style/<style>", callback=self.stylesheet)
+        self.route("/script/<script>", callback=self.script)
+        self.route("/template/<templname>", callback=self.template)
+
+    def pre_render(self):
+        # will either be an ajax-data call
+        # a pre-render call
+        return False
+
+    def index_page(self):
+        scripts = list(map((lambda x:x[:-3]),filter((lambda x:x[-3:]==".js"),os.listdir("js"))))
+        styles = list(map((lambda x:x[:-4]),filter((lambda x:x[-4:]==".css"),os.listdir("css"))))
+        with open("templates/header.mustache") as f:
+            if self.pre_render():
+                return pystache.render(f.read(),{
+                    "scripts":scripts,
+                    "styles":styles,
+                    "page_render":partial(pystache.render(self.template("home"),{}))
+                })
+            else:
+                return pystache.render(f.read(),{
+                    "scripts":scripts,
+                    "styles":styles
+                })
+
+    def stylesheet(self,style):
+        return bottle.static_file("{}.css".format(style), "css")
+
+    def script(self, script):
+        return bottle.static_file("{}.js".format(script), "js")
+
+    def template(self, templname):
+        return bottle.static_file("{}.mustache".format(templname), "templates")
+
 if __name__=="__main__":
     api = API(graph.Storage())
-    api.run()
+    web = Interface()
+    web.mount("/api",api)
+    web.run()
