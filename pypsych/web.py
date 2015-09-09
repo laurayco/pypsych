@@ -97,18 +97,19 @@ class Interface(bottle.Bottle):
     def pre_render(self):
         # will either be an ajax-data call
         # a pre-render call
-        return False
+        return True
 
     def index_page(self):
         scripts = list(map((lambda x:x[:-3]),filter((lambda x:x[-3:]==".js"),os.listdir("js"))))
         styles = list(map((lambda x:x[:-4]),filter((lambda x:x[-4:]==".css"),os.listdir("css"))))
         with open("templates/header.mustache") as f:
             if self.pre_render():
-                return pystache.render(f.read(),{
-                    "scripts":scripts,
-                    "styles":styles,
-                    "page_render":partial(pystache.render(self.template("home"),{}))
-                })
+                with open("templates/home.mustache") as ff:
+                    return pystache.render(f.read(),{
+                        "scripts":scripts,
+                        "styles":styles,
+                        "page_render":partial(pystache.render,ff.read(),{"name":"Tyler"})
+                    })
             else:
                 return pystache.render(f.read(),{
                     "scripts":scripts,
